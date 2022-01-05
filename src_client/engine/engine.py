@@ -1,7 +1,7 @@
 import pygame
 
 
-from src.engine.handlers.ressource_handler import RessourceHandler
+from src_client.engine.handlers.ressource_handler import RessourceHandler
 
 
 class Engine:

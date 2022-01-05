@@ -17,5 +17,8 @@ class World:
                                [1, 1, 1, 1, 1, 1, 1, 0]]
 
     def render(self, rect_to_render: pygame.Rect):
-        pass
-
+        window = self.engine.window
+        for y in range(len(self.tile_index_map)):
+            for x in range(len(self.tile_index_map[0])):
+                if self.tile_index_map[y][x]:
+                    window.blit(self.engine.ressources_handler.images["terrain"]["cube1"], 150 + x * 16 - y * 16, 150 + x * 10 + y * 10)

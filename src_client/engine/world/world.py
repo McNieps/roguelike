@@ -5,8 +5,8 @@ from src_client.engine.handlers.loop_handler import LoopHandler
 
 
 class World:
-    def __init__(self, engine: Engine):
-        self.engine = engine
+    def __init__(self, _engine: Engine):
+        self.engine = _engine
 
         self.tile_index_map = [[0, 0, 0, 0, 0, 0, 0, 0],
                                [1, 1, 1, 1, 1, 1, 1, 0],
@@ -16,6 +16,8 @@ class World:
                                [1, 1, 1, 1, 1, 1, 1, 0],
                                [1, 1, 1, 1, 1, 1, 1, 0],
                                [1, 1, 1, 1, 1, 1, 1, 0]]
+
+    
 
     def render(self):
         window = self.engine.window

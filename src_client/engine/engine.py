@@ -9,8 +9,10 @@ class Engine:
         print("Initializing Engine")
         self.ressources_handler = RessourceHandler()
         self.ressources_handler.pre_init()
-        print(self.ressources_handler.data)
+
         self.window = self.create_window()
+
+        self.ressources_handler.init()
 
     def create_window(self):
         window_size = self.ressources_handler.fetch_data(["engine", "window", "size"])

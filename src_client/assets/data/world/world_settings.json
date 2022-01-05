@@ -1,0 +1,5 @@
+{
+  "cluster": {
+    "size_in_tiles": [8, 8]
+  }
+}

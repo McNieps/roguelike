@@ -1,5 +1,8 @@
 {
   "engine": {
     "window": "window.json"
+  },
+  "world": {
+    "settings": "world_settings.json"
   }
 }

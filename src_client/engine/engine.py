@@ -1,6 +1,5 @@
 import pygame
 
-
 from src_client.engine.handlers.ressource_handler import RessourceHandler
 
 
@@ -10,9 +9,11 @@ class Engine:
         self.ressources_handler = RessourceHandler()
         self.ressources_handler.pre_init()
 
+        print("Creating window")
         self.window = self.create_window()
         self.ressources_handler.init()
 
+        print("Loading ressources")
         self.ressources_handler.init()
 
     def create_window(self):

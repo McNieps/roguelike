@@ -25,14 +25,14 @@ class RessourceHandler:
         self.extract_data_dictionary(data_index_dict, "../assets/data/")
 
     def load_sounds(self):
-        sound_json_file = open("../assets/sounds/sound_index.json")
+        sound_json_file = open("../assets/sounds/sounds_index.json")
         sound_json_dict = json_load(sound_json_file)
         sound_json_file.close()
 
         self.extract_sound_dictionary(sound_json_dict, "../assets/sounds/")
 
     def load_images(self):
-        image_json_file = open("../assets/images/image_index.json")
+        image_json_file = open("../assets/images/images_index.json")
         image_json_dict = json_load(image_json_file)
         image_json_file.close()
 

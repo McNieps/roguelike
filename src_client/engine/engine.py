@@ -11,6 +11,7 @@ class Engine:
         self.ressources_handler.pre_init()
 
         self.window = self.create_window()
+        self.ressources_handler.init()
 
         self.ressources_handler.init()
 

@@ -1,2 +1,5 @@
 {
+  "terrain": {
+    "cube1": "cube1.png"
+  }
 }

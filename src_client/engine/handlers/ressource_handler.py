@@ -18,25 +18,25 @@ class RessourceHandler:
         self.load_images()
 
     def load_data(self):
-        data_index_file = open("../assets/data/data_index.json")
+        data_index_file = open("../../assets/data/data_index.json")
         data_index_dict = json_load(data_index_file)
         data_index_file.close()
 
-        self.extract_data_dictionary(data_index_dict, "../assets/data/")
+        self.extract_data_dictionary(data_index_dict, "../../assets/data/")
 
     def load_sounds(self):
-        sound_json_file = open("../assets/sounds/sounds_index.json")
+        sound_json_file = open("../../assets/sounds/sounds_index.json")
         sound_json_dict = json_load(sound_json_file)
         sound_json_file.close()
 
-        self.extract_sound_dictionary(sound_json_dict, "../assets/sounds/")
+        self.extract_sound_dictionary(sound_json_dict, "../../assets/sounds/")
 
     def load_images(self):
-        image_json_file = open("../assets/images/images_index.json")
+        image_json_file = open("../../assets/images/images_index.json")
         image_json_dict = json_load(image_json_file)
         image_json_file.close()
 
-        self.extract_image_dictionary(image_json_dict, "../assets/images/")
+        self.extract_image_dictionary(image_json_dict, "../../assets/images/")
 
     def extract_data_dictionary(self, dictionary, path, receiving_dict=None):
         if receiving_dict is None:

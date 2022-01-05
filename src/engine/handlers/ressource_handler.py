@@ -105,24 +105,3 @@ class RessourceHandler:
         for key in keys:
             sub_dict = sub_dict[key]
         return sub_dict
-
-
-if __name__ == '__main__':
-    from flipplan.engine.handlers.loop_handler import LoopHandler
-
-    loop_handler = LoopHandler(120)
-    ressources_handler = RessourceHandler()
-
-    while loop_handler.is_running():
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                loop_handler.stop_loop()
-            if event.type == pygame.KEYDOWN:
-                ressources_handler.play_sound(["misc", "misc_2"])
-
-        if pygame.key.get_pressed()[pygame.K_RETURN]:
-            ressources_handler.play_sound(["misc", "misc_2"])
-            pass
-
-        pygame.display.flip()
-    pygame.quit()

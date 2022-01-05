@@ -18,11 +18,18 @@ class Engine:
     def create_window(self):
         window_size = self.ressources_handler.fetch_data(["engine", "window", "size"])
         is_scaled = self.ressources_handler.fetch_data(["engine", "window", "scaled"])
+        window_name = self.ressources_handler.fetch_data(["engine", "window", "name"])
+        use_icon = self.ressources_handler.fetch_data(["engine", "window", "use_icon"])
 
         if is_scaled:
             window = pygame.display.set_mode(window_size, pygame.SCALED)
         else:
             window = pygame.display.set_mode(window_size)
+
+        pygame.display.set_caption(window_name)
+
+        if use_icon:
+            print("Normalement il y aura une icone")
 
         return window
 

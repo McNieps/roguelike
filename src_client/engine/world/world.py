@@ -54,10 +54,12 @@ class World:
         for tile in self.tiles:
             tile.render()
 
-    def render_tiles_in_rect(self, rect):
+    def render_tiles_in_rect(self, rect: pygame.Rect):
         rect_offset = -rect.left, -rect.top
 
         for cluster in self.clusters:
+            cluster_adjusted_rect = pygame.Rect((cluster.rect.left - rect.left, cluster.rect.top - rect.top), cluster.rect.size)
+            pygame.draw.rect(self.engine.window, (255, 255, 255), cluster_adjusted_rect)
             if rect.colliderect(cluster.rect):
                 for tile in cluster.tiles:
                     if rect.colliderect(tile.rect_render):
@@ -76,6 +78,9 @@ if __name__ == "__main__":
     camera = Camera(engine, (0, 0), world)
 
     while loop_handler.is_running():
+        delta = loop_handler.limit_and_get_delta()
+        loop_handler.print_fps()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 loop_handler.stop_loop()
@@ -88,14 +93,15 @@ if __name__ == "__main__":
                     Tile.height_multiplicator += 1
 
         key_pressed = pygame.key.get_pressed()
+        cam_speed = 100 * delta
         if key_pressed[pygame.K_KP_8]:
-            camera.move(0, -0.1)
+            camera.move(0, -cam_speed)
         if key_pressed[pygame.K_KP_2]:
-            camera.move(0, 0.1)
+            camera.move(0, cam_speed)
         if key_pressed[pygame.K_KP_4]:
-            camera.move(-0.1, 0)
+            camera.move(-cam_speed, 0)
         if key_pressed[pygame.K_KP_6]:
-            camera.move(0.1, 0)
+            camera.move(cam_speed, 0)
 
         cam_rect = camera.rect
 

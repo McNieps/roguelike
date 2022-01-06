@@ -1,6 +1,6 @@
 import pygame
 
-from src_client.engine.world.library import get_tile_xy_coords_from_tile_index
+from src_client.engine.world.library import get_iso_xy_from_tile_index
 
 
 class Tile:
@@ -13,15 +13,15 @@ class Tile:
         self.image = tile_image
 
         self.sim_position = tile_index[0] * sim_tile_size[0], tile_index[1] * sim_tile_size[1]
-        self.render_position = get_tile_xy_coords_from_tile_index(tile_index)
+        self.render_position = get_iso_xy_from_tile_index(tile_index)
 
         self.rect_render = pygame.Rect(self.render_position, tile_top_size)
         self.rect_sim = pygame.Rect(self.sim_position, sim_tile_size)
 
-        self.p1 = get_tile_xy_coords_from_tile_index(self.tile_index, (16, 0))
-        self.p2 = get_tile_xy_coords_from_tile_index((self.tile_index[0] + 1, self.tile_index[1]), (16, 0))
-        self.p3 = get_tile_xy_coords_from_tile_index((self.tile_index[0] + 1, self.tile_index[1] + 1), (16, 0))
-        self.p4 = get_tile_xy_coords_from_tile_index((self.tile_index[0], self.tile_index[1] + 1), (16, 0))
+        self.p1 = get_iso_xy_from_tile_index(self.tile_index, (16, 0))
+        self.p2 = get_iso_xy_from_tile_index((self.tile_index[0] + 1, self.tile_index[1]), (16, 0))
+        self.p3 = get_iso_xy_from_tile_index((self.tile_index[0] + 1, self.tile_index[1] + 1), (16, 0))
+        self.p4 = get_iso_xy_from_tile_index((self.tile_index[0], self.tile_index[1] + 1), (16, 0))
 
     def render(self):
         self.engine.window.blit(self.image, self.render_position)

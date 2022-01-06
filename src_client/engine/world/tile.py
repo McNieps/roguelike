@@ -1,6 +1,6 @@
 import pygame
 
-from src_client.engine.world.library import get_iso_xy_from_tile_index
+from src_client.engine.world.library import get_iso_xy_from_xyz
 
 
 class Tile:
@@ -15,24 +15,20 @@ class Tile:
         self.image = tile_image
         self.height = tile_height
 
-        self.sim_position = tile_index[0] * sim_tile_size[0], tile_index[1] * sim_tile_size[1]
-        self.render_position = get_iso_xy_from_tile_index(tile_index, (200, - self.height * Tile.height_multiplicator))
+        self.x = tile_index[0] * sim_tile_size[0]
+        self.y = tile_index[1] * sim_tile_size[1]
+        self.z = -self.height * Tile.height_multiplicator
+
+        self.render_position = get_iso_xy_from_xyz(self.x, self.y, self.z)
 
         self.rect_render = pygame.Rect(self.render_position, tile_top_size)
-        self.rect_sim = pygame.Rect(self.sim_position, sim_tile_size)
+        self.rect_sim = pygame.Rect((self.x, self.y), sim_tile_size)
 
-        self.p1 = get_iso_xy_from_tile_index(self.tile_index, (16, 0))
-        self.p2 = get_iso_xy_from_tile_index((self.tile_index[0] + 1, self.tile_index[1]), (16, 0))
-        self.p3 = get_iso_xy_from_tile_index((self.tile_index[0] + 1, self.tile_index[1] + 1), (16, 0))
-        self.p4 = get_iso_xy_from_tile_index((self.tile_index[0], self.tile_index[1] + 1), (16, 0))
+    def render(self, offset=None):
+        self.z = -self.height * Tile.height_multiplicator
+        self.render_position = get_iso_xy_from_xyz(self.x, self.y, self.z)
+        render_pos = self.render_position
+        if offset:
+            render_pos = (render_pos[0]+offset[0], render_pos[1]+offset[1])
 
-    def render(self):
-
-        self.render_position = get_iso_xy_from_tile_index(self.tile_index, (200, - self.height * Tile.height_multiplicator))
-        self.engine.window.blit(self.image, self.render_position)
-
-    def render_hitbox(self):
-        pygame.draw.line(self.engine.window, (255, 0, 0), self.p1, self.p2)
-        pygame.draw.line(self.engine.window, (255, 0, 0), self.p2, self.p3)
-        pygame.draw.line(self.engine.window, (255, 0, 0), self.p3, self.p4)
-        pygame.draw.line(self.engine.window, (255, 0, 0), self.p4, self.p1)
+        self.engine.window.blit(self.image, render_pos)

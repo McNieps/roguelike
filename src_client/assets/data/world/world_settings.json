@@ -1,4 +1,10 @@
 {
+  "tile": {
+    "top_size": [32, 16],
+    "top_width": 32,
+    "top_height": 16,
+    "sim_tile_size": [32, 32]
+  },
   "cluster": {
     "size_in_tiles": [8, 8]
   }

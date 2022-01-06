@@ -23,6 +23,7 @@ class RessourceHandler:
         data_index_file.close()
 
         self.extract_data_dictionary(data_index_dict, "../../assets/data/")
+        print(self.data)
 
     def load_sounds(self):
         sound_json_file = open("../../assets/sounds/sounds_index.json")

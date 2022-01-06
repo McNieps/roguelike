@@ -2,6 +2,6 @@ import pygame
 
 
 class Cluster:
-    def __init__(self, rect=None):
-        self.rect = pygame.Rect(0, 0, 640, 480)
+    def __init__(self, rect):
+        self.rect = rect
         self.tiles = []

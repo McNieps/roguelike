@@ -52,7 +52,7 @@ class Tile:
         self.engine.window.blit(self.image, render_pos)
 
     def render_hitbox(self, offset: tuple = (0, 0)):
-        p1 = self.p1[0] + offset[0], self.p1[1] + offset[1]   # TODO utiliser la fonction magic de Théo
+        p1 = self.p1[0] + offset[0], self.p1[1] + offset[1]
         p2 = self.p2[0] + offset[0], self.p2[1] + offset[1]
         p3 = self.p3[0] + offset[0], self.p3[1] + offset[1]
         p4 = self.p4[0] + offset[0], self.p4[1] + offset[1]

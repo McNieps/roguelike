@@ -33,22 +33,46 @@ class World:
                                 [0, 0, 0, 0, 0, 1, 1, 0]]
 
         self.tiles = []
-        self.clusters = [Cluster()]
+        self.clusters = {}
 
         self.fill_tiles_list()
 
     def fill_tiles_list(self):
+        cluster_size = self.engine.ressources_handler.fetch_data(["world", "settings", "cluster", "size"])
+
         for y in range(len(self.tile_index_map)):
+
             for x in range(len(self.tile_index_map[0])):
+
                 if self.tile_index_map[y][x]:
-                    val = randint(0, 2)
-                    if val == 0:
-                        self.tiles.append(Tile(self.engine, (x, y), self.tile_height_map[y][x], self.engine.ressources_handler.images["terrain"]["cube1"]))
-                    elif val == 1:
-                        self.tiles.append(Tile(self.engine, (x, y), self.tile_height_map[y][x], self.engine.ressources_handler.images["terrain"]["cube2"]))
-                    elif val == 2:
-                        self.tiles.append(Tile(self.engine, (x, y), self.tile_height_map[y][x], self.engine.ressources_handler.images["terrain"]["cube3"]))
-                    self.clusters[0].tiles.append(self.tiles[-1])  # TODO A changer plus tard :)
+                    tile_height = self.tile_height_map[y][x]
+                    tile_image = self.engine.ressources_handler.images["terrain"][f"cube{randint(1, 3)}"]
+                    tile = Tile(self.engine, (x, y), tile_height, tile_image)
+
+                    # TODO AJOUTER RECT MARGIN POUR PREVENIR LES DEPLACEMENTS
+                    min_x = tile.render_rect.left
+                    max_x = tile.render_rect.right
+                    min_y = tile.render_rect.top
+                    max_y = tile.render_rect.bottom
+
+                    cluster_left = min_x // cluster_size[0]
+                    cluster_right = max_x // cluster_size[0]
+                    cluster_top = min_y // cluster_size[1]
+                    cluster_bottom = max_y // cluster_size[1]
+
+                    for cluster_x in range(cluster_left, cluster_right+1):
+                        for cluster_y in range(cluster_top, cluster_bottom+1):
+                            cluster_index = (cluster_x, cluster_y)
+                            if cluster_index not in self.clusters:
+                                cluster_pos = (cluster_x * cluster_size[0], cluster_y * cluster_size[1])
+                                cluster_rect = pygame.Rect(cluster_pos, cluster_size)
+                                self.clusters[cluster_index] = Cluster(cluster_rect)
+                            self.clusters[cluster_index].tiles.append(tile)
+
+                    self.tiles.append(tile)
+
+        for key in self.clusters:
+            print(self.clusters[key].rect)
 
     def render_tiles(self, rect: pygame.Rect):
         """
@@ -56,8 +80,8 @@ class World:
         """
 
         rect_offset = -rect.left, -rect.top
-
-        for cluster in self.clusters:
+        for key in self.clusters:
+            cluster = self.clusters[key]
             cluster_adjusted_rect = pygame.Rect((cluster.rect.left - rect.left, cluster.rect.top - rect.top), cluster.rect.size)
             pygame.draw.rect(self.engine.window, (255, 255, 255), cluster_adjusted_rect)
             if rect.colliderect(cluster.rect):
@@ -77,7 +101,7 @@ if __name__ == "__main__":
 
     while loop_handler.is_running():
         delta = loop_handler.limit_and_get_delta()
-        loop_handler.print_fps()
+        # loop_handler.print_fps()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -110,7 +134,7 @@ if __name__ == "__main__":
         cam_rect = camera.rect
 
         engine.window.fill((0, 0, 0))
-        world.render_tiles_in_rect(cam_rect)
+        world.render_tiles(cam_rect)
 
         pygame.display.flip()
     pygame.quit()

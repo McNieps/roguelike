@@ -1,6 +1,5 @@
 import pygame
 
-from src_client.engine.world.tile import Tile
 from src_client.engine.engine import Engine
 
 
@@ -28,11 +27,12 @@ class Camera:
         self.currently_fellowing = False
         self.linked_entity = None
 
-    def move(self, x: float, y: float, increment=True):
+    def move(self, x: float, y: float, increment: bool = True):
         if increment:
             self.x += x
             self.y += y
         else:
             self.x = x
             self.y = y
+
         self.rect.center = (self.x, self.y)

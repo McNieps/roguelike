@@ -62,12 +62,10 @@ class World:
             pygame.draw.rect(self.engine.window, (255, 255, 255), cluster_adjusted_rect)
             if rect.colliderect(cluster.rect):
                 for tile in cluster.tiles:
-                    if rect.colliderect(tile.rect_render):
+                    if rect.colliderect(tile.render_rect):
+                        # tile.show_rect(rect_offset)
                         tile.render(rect_offset)
-
-    def render_hitbox(self):
-        for tile in self.tiles:
-            tile.render_hitbox()
+                        # tile.render_hitbox(rect_offset)
 
 
 if __name__ == "__main__":
@@ -89,8 +87,14 @@ if __name__ == "__main__":
                     loop_handler.stop_loop()
                 if event.key == pygame.K_DOWN:
                     Tile.height_multiplicator -= 1
+                    for _tile in world.tiles:
+                        _tile.update_tile()
+                        _tile.update_hitbox()
                 if event.key == pygame.K_UP:
                     Tile.height_multiplicator += 1
+                    for _tile in world.tiles:
+                        _tile.update_tile()
+                        _tile.update_hitbox()
 
         key_pressed = pygame.key.get_pressed()
         cam_speed = 100 * delta

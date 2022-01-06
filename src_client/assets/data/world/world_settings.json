@@ -6,6 +6,6 @@
     "sim_tile_size": [32, 32]
   },
   "cluster": {
-    "size_in_tiles": [8, 8]
+    "size_in_tiles": [32, 32]
   }
 }

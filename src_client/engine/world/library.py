@@ -1,3 +1,5 @@
+# TODO Optimisation sur les deux fonctions en dessous, mais trop tot pour le moment
+
 def get_iso_xy_from_tile_index(tile_index: tuple, offset: tuple = None):
     half = 16       # deduce from tile top size
     quarter = 8
@@ -12,10 +14,15 @@ def get_iso_xy_from_tile_index(tile_index: tuple, offset: tuple = None):
     return projected_x, projected_y
 
 
-def get_iso_xy_from_xyz(x: float, y: float, z: float) -> tuple:
+def get_iso_xy_from_xyz(x: float, y: float, z: float, offset: tuple = None) -> tuple:
     sim_tile_size = [32, 32]
-    simili_x_index = x / sim_tile_size[0]   # x >> 5
-    simili_y_index = y / sim_tile_size[1]   # x >> 5
+    simili_x_index = x / sim_tile_size[0]
+    simili_y_index = y / sim_tile_size[1]
+
     x, y = get_iso_xy_from_tile_index((simili_x_index, simili_y_index))
+
+    if offset:
+        x += offset[0]
+        y += offset[1]
     y += z
     return x, y

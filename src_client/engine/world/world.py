@@ -20,6 +20,15 @@ class World:
                                [1, 1, 1, 1, 1, 1, 1, 0],
                                [1, 1, 1, 1, 1, 1, 1, 0]]
 
+        self.tile_height_map = [[3, 3, 3, 0, 0, 0, 0, 0],
+                               [3, 3, 3, 2, 1, 1, 1, 0],
+                               [3, 3, 3, 0, 0, 0, 1, 0],
+                               [2, 2, 2, 0, 0, 0, 1, 0],
+                               [1, 1, 1, 1, 1, 1, 1, 0],
+                               [0, 0, 0, 0, 0, 1, 1, 0],
+                               [0, 0, 0, 0, 0, 1, 1, 0],
+                               [0, 0, 0, 0, 0, 1, 1, 0]]
+
         self.tiles = []
         self.fill_tiles_list()
 
@@ -29,11 +38,11 @@ class World:
                 if self.tile_index_map[y][x]:
                     val = randint(0, 2)
                     if val == 0:
-                        self.tiles.append(Tile(self.engine, (x, y), self.engine.ressources_handler.images["terrain"]["cube1"]))
+                        self.tiles.append(Tile(self.engine, (x, y), self.tile_height_map[y][x], self.engine.ressources_handler.images["terrain"]["cube1"]))
                     elif val == 1:
-                        self.tiles.append(Tile(self.engine, (x, y), self.engine.ressources_handler.images["terrain"]["cube2"]))
+                        self.tiles.append(Tile(self.engine, (x, y), self.tile_height_map[y][x], self.engine.ressources_handler.images["terrain"]["cube2"]))
                     elif val == 2:
-                        self.tiles.append(Tile(self.engine, (x, y), self.engine.ressources_handler.images["terrain"]["cube3"]))
+                        self.tiles.append(Tile(self.engine, (x, y), self.tile_height_map[y][x], self.engine.ressources_handler.images["terrain"]["cube3"]))
 
     def render(self):
         window = self.engine.window
@@ -47,7 +56,6 @@ class World:
     def render_bis(self):
         for tile in self.tiles:
             tile.render()
-            # tile.render_hitbox()
 
     def render_hitbox(self):
         for tile in self.tiles:
@@ -67,6 +75,11 @@ if __name__ == "__main__":
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     loop_handler.stop_loop()
+                if event.key == pygame.K_DOWN:
+                    Tile.height_multiplicator -= 1
+                if event.key == pygame.K_UP:
+                    Tile.height_multiplicator += 1
+        engine.window.fill((0,0,0))
         world.render_bis()
         # world.render_hitbox()
         pygame.display.flip()

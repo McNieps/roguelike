@@ -68,6 +68,6 @@ if __name__ == "__main__":
                 if event.key == pygame.K_ESCAPE:
                     loop_handler.stop_loop()
         world.render_bis()
-        world.render_hitbox()
+        # world.render_hitbox()
         pygame.display.flip()
     pygame.quit()

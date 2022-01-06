@@ -1,4 +1,4 @@
-def get_tile_xy_coords_from_tile_index(tile_index, offset: tuple = None):
+def get_iso_xy_from_tile_index(tile_index, offset: tuple = None):
     half = 16       # deduce from tile top size
     quarter = 8
 
@@ -16,6 +16,6 @@ def get_iso_xy_from_xyz(x, y, z):
     sim_tile_size = [32, 32]
     simili_x_index = x / sim_tile_size[0]   # x >> 5
     simili_y_index = y / sim_tile_size[1]   # x >> 5
-    x, y = get_tile_xy_coords_from_tile_index(simili_x_index, simili_y_index)
+    x, y = get_iso_xy_from_tile_index(simili_x_index, simili_y_index)
     y += z
     return x, y

@@ -50,11 +50,11 @@ class World:
                         self.tiles.append(Tile(self.engine, (x, y), self.tile_height_map[y][x], self.engine.ressources_handler.images["terrain"]["cube3"]))
                     self.clusters[0].tiles.append(self.tiles[-1])  # TODO A changer plus tard :)
 
-    def render_tiles(self):
-        for tile in self.tiles:
-            tile.render()
+    def render_tiles(self, rect: pygame.Rect):
+        """
+        le rectangle correspond à la zone de vue. Obtenable via la camera normalement
+        """
 
-    def render_tiles_in_rect(self, rect: pygame.Rect):
         rect_offset = -rect.left, -rect.top
 
         for cluster in self.clusters:

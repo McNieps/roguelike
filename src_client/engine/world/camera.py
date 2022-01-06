@@ -36,3 +36,6 @@ class Camera:
             self.y = y
 
         self.rect.center = (self.x, self.y)
+
+    def center_on_entity(self, entity):
+        self.move(entity.x, entity.y, False)

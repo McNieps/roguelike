@@ -3,5 +3,8 @@
     "cube1": "cube1.png",
     "cube2": "cube2.png",
     "cube3": "cube3.png"
+  },
+  "player": {
+    "player": "player.png"
   }
 }

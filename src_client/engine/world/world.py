@@ -8,6 +8,7 @@ from src_client.engine.handlers.loop_handler import LoopHandler
 from src_client.engine.world.tile import Tile
 from src_client.engine.world.cluster import Cluster
 from src_client.engine.world.camera import Camera
+from src_client.engine.player.player import Player
 
 
 class World:
@@ -74,10 +75,12 @@ if __name__ == "__main__":
     engine = Engine()
     world = World(engine)
     camera = Camera(engine, (0, 0), world)
+    player = Player(engine, engine.ressources_handler.images["player"]["player"])
+    camera.center_on_entity(player)
 
     while loop_handler.is_running():
         delta = loop_handler.limit_and_get_delta()
-        loop_handler.print_fps()
+        #loop_handler.print_fps()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -97,20 +100,33 @@ if __name__ == "__main__":
                         _tile.update_hitbox()
 
         key_pressed = pygame.key.get_pressed()
-        cam_speed = 100 * delta
+        cam_speed = player.speed * delta
         if key_pressed[pygame.K_KP_8]:
-            camera.move(0, -cam_speed)
+            player.move_up(delta)
+            if(player.offset[1] <= - player.maxOffset):
+                camera.move(0, - cam_speed)
         if key_pressed[pygame.K_KP_2]:
-            camera.move(0, cam_speed)
+            player.move_down(delta)
+            if(player.offset[1] >= player.maxOffset):
+                camera.move(0, cam_speed)
         if key_pressed[pygame.K_KP_4]:
-            camera.move(-cam_speed, 0)
+            player.move_left(delta)
+            if(player.offset[0] <= - player.maxOffset):
+                camera.move(- cam_speed, 0)
+            #camera.move(-cam_speed, 0)
         if key_pressed[pygame.K_KP_6]:
-            camera.move(cam_speed, 0)
+            player.move_right(delta)
+            if(player.offset[0] >= player.maxOffset):
+                camera.move(cam_speed, 0)
+            #camera.move(cam_speed, 0)
+
+        #camera.center_on_entity(player)
 
         cam_rect = camera.rect
 
         engine.window.fill((0, 0, 0))
-        world.render_tiles_in_rect(cam_rect)
+        world.render_tiles(cam_rect)
+        player.render()
 
         pygame.display.flip()
     pygame.quit()

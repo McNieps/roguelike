@@ -4,8 +4,5 @@
     "top_width": 32,
     "top_height": 16,
     "sim_tile_size": [32, 32]
-  },
-  "cluster": {
-    "size": [256, 256]
   }
 }

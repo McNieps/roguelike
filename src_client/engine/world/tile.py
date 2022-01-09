@@ -4,7 +4,8 @@ from src_client.engine.world.library import get_iso_xy_from_xyz
 
 
 class Tile:
-    height_multiplicator = 5
+    height_multiplicator = 4
+    hitbox_color = (255, 0, 0)
 
     def __init__(self, engine, tile_index, tile_height: float, tile_image: pygame.Surface):
         sim_tile_size = engine.ressources_handler.fetch_data(["world", "settings", "tile", "sim_tile_size"])
@@ -52,11 +53,14 @@ class Tile:
         self.engine.window.blit(self.image, render_pos)
 
     def render_hitbox(self, offset: tuple = (0, 0)):
+        self.z = 4
+        self.render_position = get_iso_xy_from_xyz(self.x, self.y, self.z, (-16, 0))
+        self.render_rect.topleft = self.render_position
         p1 = self.p1[0] + offset[0], self.p1[1] + offset[1]
         p2 = self.p2[0] + offset[0], self.p2[1] + offset[1]
         p3 = self.p3[0] + offset[0], self.p3[1] + offset[1]
         p4 = self.p4[0] + offset[0], self.p4[1] + offset[1]
-        pygame.draw.line(self.engine.window, (50, 50, 255), p1, p2)
-        pygame.draw.line(self.engine.window, (50, 50, 255), p2, p3)
-        pygame.draw.line(self.engine.window, (50, 50, 255), p3, p4)
-        pygame.draw.line(self.engine.window, (50, 50, 255), p4, p1)
+        pygame.draw.line(self.engine.window, Tile.hitbox_color, p1, p2)
+        pygame.draw.line(self.engine.window, Tile.hitbox_color, p2, p3)
+        pygame.draw.line(self.engine.window, Tile.hitbox_color, p3, p4)
+        pygame.draw.line(self.engine.window, Tile.hitbox_color, p4, p1)
